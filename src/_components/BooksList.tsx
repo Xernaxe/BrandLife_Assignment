@@ -3,7 +3,15 @@ import { Book } from '../_types/Book';
 import { BookItem } from './BookItem';
 import { Grid } from '@mui/material';
 
-export const BooksList = ({ books }: { books: Book[] }) => {
+interface Props {
+	books: Book[];
+	removeBook: (id: number) => Promise<boolean>;
+}
+
+export const BooksList: React.FC<Props> = ({
+	books,
+	removeBook,
+}) => {
 	const gridGaps = { xs: 0, sm: 1, md: 2 };
 	return (
 		<Grid
@@ -23,7 +31,7 @@ export const BooksList = ({ books }: { books: Book[] }) => {
 						sx={{ minHeight: '200px' }}
 						key={book.id}
 					>
-						<BookItem {...book} />
+						<BookItem {...book} removeBook={removeBook} />
 					</Grid>
 				);
 			})}

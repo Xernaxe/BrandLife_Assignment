@@ -1,20 +1,17 @@
-import { useEffect, useState } from 'react';
 import './App.css';
-import { getBooks } from './_actions/getBooks';
-import { Book } from './_types/Book';
 import { BooksList } from './_components/BooksList';
+import { useBooks } from './_actions/useBooks';
 
 function App() {
-	const [books, setBooks] = useState<Book[] | null>(null);
-	const updateBooksState = async () => {
-		const fetchedBooks = await getBooks();
-		setBooks(fetchedBooks);
-	};
-
-	useEffect(() => {
-		updateBooksState();
-	}, []);
-	return <>{books ? <BooksList books={books} /> : <div>loading</div>}</>;
+	const { data, error, removeBook } = useBooks();
+	
+	if (error) return <div>Error loading books</div>;
+	if (!data) return <div>Loading...</div>;
+	return (
+		<>
+			<BooksList books={data} removeBook={removeBook} />
+		</>
+	);
 }
 
 export default App;
