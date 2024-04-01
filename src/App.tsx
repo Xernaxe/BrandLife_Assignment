@@ -14,13 +14,7 @@ function App() {
 	useEffect(() => {
 		updateBooksState();
 	}, []);
-	return (
-		<>
-			<p>Setup</p>
-
-			{books ? <BooksList books={books}/> : <div>loading</div>}
-		</>
-	);
+	return <>{books ? <BooksList books={books} /> : <div>loading</div>}</>;
 }
 
 export default App;
